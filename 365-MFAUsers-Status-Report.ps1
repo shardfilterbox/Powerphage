@@ -9,7 +9,7 @@ $TenantDetails = Get-AzureADTenantDetail
 $TenantName = $TenantDetails.DisplayName
 
 ## Pull data
-$Users = Get-MsolUser -All | ? { $_.UserType -ne "Guest" }
+$Users = Get-MsolUser -All | Where-Object { $_.UserType -ne "Guest" }
 $Report = [System.Collections.Generic.List[Object]]::new() # Create output file
 
 ##Some code for testing
@@ -22,7 +22,7 @@ ForEach ($User in $Users) {
     $MFAMethods = $User.StrongAuthenticationMethods.MethodType
     $MFAEnforced = $User.StrongAuthenticationRequirements.State
     $MFAPhone = $User.StrongAuthenticationUserDetails.PhoneNumber
-    $DefaultMFAMethod = ($User.StrongAuthenticationMethods | ? { $_.IsDefault -eq "True" }).MethodType
+    $DefaultMFAMethod = ($User.StrongAuthenticationMethods | Where-Object { $_.IsDefault -eq "True" }).MethodType
     If (($MFAEnforced -eq "Enforced") -or ($MFAEnforced -eq "Enabled")) {
         Switch ($DefaultMFAMethod) {
             "OneWaySMS" { $MethodUsed = "One-way SMS" }
@@ -56,5 +56,5 @@ ForEach ($User in $Users) {
 #start ".\MFAUsers-Status-Report-$CurrentDateTime.csv"
 
 #Export and open
-$Report | Sort Name | Export-Csv -Path "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
+$Report | Sort-Object Name | Export-Csv -Path "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
 Start-Process "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
