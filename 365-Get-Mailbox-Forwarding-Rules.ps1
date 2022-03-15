@@ -12,4 +12,6 @@ $TenantName = $TenantDetails.DisplayName
 
 #Export and open
 Get-Mailbox | select UserPrincipalName,ForwardingSmtpAddress,DeliverToMailboxAndForward | Export-csv $DownloadsFolder\$TenantName-MailboxForwarding-$CurrentDate.csv -NoTypeInformation
-Start $DownloadsFolder\$TenantName-MailboxForwarding-$CurrentDate.csv
+Start-Process $DownloadsFolder\$TenantName-MailboxForwarding-$CurrentDate.csv
+
+Disconnect-ExchangeOnline -Confirm:$false

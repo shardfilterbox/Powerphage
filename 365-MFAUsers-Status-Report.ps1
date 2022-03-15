@@ -57,4 +57,4 @@ ForEach ($User in $Users) {
 
 #Export and open
 $Report | Sort Name | Export-Csv -Path "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
-start "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
+Start-Process "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
