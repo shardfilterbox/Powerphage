@@ -12,3 +12,6 @@ SECURITY
 
 365-Get-Mailbox-Forwarding-Rules
 - Exports whether mailboxes are being forwarded
+
+365-AllMailboxRules
+- Exports all Mailbox Rules
