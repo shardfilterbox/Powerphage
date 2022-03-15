@@ -18,4 +18,5 @@ foreach ($user in $users) {
     }
 }
 
-Start $DownloadsFolder\$TenantName-MailboxRules-$CurrentDate.csv
+Start-Process $DownloadsFolder\$TenantName-MailboxRules-$CurrentDate.csv
+Disconnect-ExchangeOnline -Confirm:$false
