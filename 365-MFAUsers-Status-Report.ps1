@@ -48,7 +48,13 @@ ForEach ($User in $Users) {
 #start ".\MFAUsers-Status-Report-$CurrentDateTime.csv"
 
 
+#Get information for filename
 $CurrentDate = Get-Date
 $CurrentDate = $CurrentDate.ToString('MM-dd-yyyy_hh-mm-ss')
-$Report | Sort Name | Export-Csv -Path ".\MFAUsers-Status-Report-$CurrentDate.csv"
-start ".\MFAUsers-Status-Report-$CurrentDate.csv"
+$DownloadsFolder = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
+$TenantDetails = Get-AzureADTenantDetail
+$TenantName = $TenantDetails.DisplayName
+
+#Export and open
+$Report | Sort Name | Export-Csv -Path "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
+start "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"
