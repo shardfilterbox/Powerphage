@@ -11,7 +11,7 @@ $TenantDetails = Get-AzureADTenantDetail
 $TenantName = $TenantDetails.DisplayName
 
 #Export and open
-Get-Mailbox | select UserPrincipalName,ForwardingSmtpAddress,DeliverToMailboxAndForward | Export-csv $DownloadsFolder\$TenantName-MailboxForwarding-$CurrentDate.csv -NoTypeInformation
+Get-Mailbox | Select-Object UserPrincipalName,ForwardingSmtpAddress,DeliverToMailboxAndForward | Export-csv $DownloadsFolder\$TenantName-MailboxForwarding-$CurrentDate.csv -NoTypeInformation
 Start-Process $DownloadsFolder\$TenantName-MailboxForwarding-$CurrentDate.csv
 
 Disconnect-ExchangeOnline -Confirm:$false
