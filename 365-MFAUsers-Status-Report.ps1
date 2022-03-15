@@ -1,5 +1,13 @@
 ﻿Connect-MsolService
 
+##Variables
+#Get information for filename
+$CurrentDate = Get-Date
+$CurrentDate = $CurrentDate.ToString('MM-dd-yyyy_hh-mm-ss')
+$DownloadsFolder = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
+$TenantDetails = Get-AzureADTenantDetail
+$TenantName = $TenantDetails.DisplayName
+
 ## Pull data
 $Users = Get-MsolUser -All | ? { $_.UserType -ne "Guest" }
 $Report = [System.Collections.Generic.List[Object]]::new() # Create output file
@@ -46,14 +54,6 @@ ForEach ($User in $Users) {
 #$CurrentDateTime=Get-Date -UFormat "%Y_%m_%d"
 #$Report | Sort Name | Export-CSV -Path ".\MFAUsers-Status-Report-$CurrentDateTime.csv"
 #start ".\MFAUsers-Status-Report-$CurrentDateTime.csv"
-
-
-#Get information for filename
-$CurrentDate = Get-Date
-$CurrentDate = $CurrentDate.ToString('MM-dd-yyyy_hh-mm-ss')
-$DownloadsFolder = (New-Object -ComObject Shell.Application).NameSpace('shell:Downloads').Self.Path
-$TenantDetails = Get-AzureADTenantDetail
-$TenantName = $TenantDetails.DisplayName
 
 #Export and open
 $Report | Sort Name | Export-Csv -Path "$DownloadsFolder\$TenantName-MFAUsers-Status-Report-$CurrentDate.csv"

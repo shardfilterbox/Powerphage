@@ -2,6 +2,7 @@
 Connect-AzureAD
 Install-Module ExchangeOnlineManagement
 
+##Variables
 #Get information for filename
 $CurrentDate = Get-Date
 $CurrentDate = $CurrentDate.ToString('MM-dd-yyyy_hh-mm-ss')
